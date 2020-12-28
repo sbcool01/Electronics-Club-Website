@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import {AppBar, Toolbar, Typography, Button, IconButton, Hidden, List, ListItem, ListItemText, SwipeableDrawer} from '@material-ui/core';
+import {AppBar, Toolbar, Button, IconButton, Hidden, List, ListItem, ListItemText, SwipeableDrawer} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles((theme) => ({
@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme) => ({
         marginRight: theme.spacing(1),
     },
     title: {
-        flexGrow: 1,
         fontSize: 22,
         [theme.breakpoints.down('xs')]: {
 			fontSize: 15
@@ -27,6 +26,11 @@ const useStyles = makeStyles((theme) => ({
     toolbar: {
         paddingRight: '2px',
     },
+    menu: {
+        flexGrow: 1,
+        display: "flex",
+        justifyContent: "flex-end",
+    }
 }));
 
 function AppHeader(props) {
@@ -37,50 +41,53 @@ function AppHeader(props) {
         setOpen(!open);
     }
 
-    const menuItemList=['About Us', 'Gallery', 'Contact Us'];
+    const menuItemList=[['About Us', '/about'], ['Gallery', '/gallery'], ['Contact Us', 'contact-us']];
 
     return (
         <div className={classes.root}>
             <AppBar position="static" className={classes.appBar}>
-                <Toolbar className={classes.toolbar}>               
-                    <Typography className={classes.title} noWrap>
+                <Toolbar className={classes.toolbar}>
+                    <Button color="inherit" href="/" className={classes.title}>
                         {props.appBarTitle}
-                    </Typography>
-                    <Hidden smDown>
-                        <Button color="inherit" href="/about">About Us</Button>
-                        <Button color="inherit" href="/about">Gallery</Button>
-                        <Button color="inherit" href="/about">Contact Us</Button>
-                    </Hidden>
+                    </Button>
+                    <div className={classes.menu}>
+                        <Hidden smDown>
+                            <Button color="inherit" href="/about">About Us</Button>
+                            <Button color="inherit" href="/gallery">Gallery</Button>
+                            <Button color="inherit" href="/contact-us">Contact Us</Button>
+                        </Hidden>
+                        
+                        <Hidden mdUp>
+                            <IconButton 
+                                edge="end" 
+                                className={classes.menuButton} 
+                                color="inherit" 
+                                aria-label="menu" 
+                                onClick={toggleDrawer}
+                            >
+                                <MenuIcon />
+                            </IconButton>
+                            <SwipeableDrawer
+                                anchor='right'
+                                open={open}
+                                onClose={toggleDrawer}
+                                onOpen={toggleDrawer}
+                                className={classes.drawer}
+                                classes = {{
+                                    paper: classes.drawerPaper,
+                                }}
+                            >
+                                <List>
+                                    {menuItemList.map((item) => (
+                                    <ListItem button key={item[0]} href={item[1]}>
+                                        <ListItemText primary={item[0]} />
+                                    </ListItem>
+                                    ))}
+                                </List>
+                            </SwipeableDrawer>
+                        </Hidden>
+                    </div>
                     
-                    <Hidden mdUp>
-                        <IconButton 
-                            edge="end" 
-                            className={classes.menuButton} 
-                            color="inherit" 
-                            aria-label="menu" 
-                            onClick={toggleDrawer}
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                        <SwipeableDrawer
-                            anchor='right'
-                            open={open}
-                            onClose={toggleDrawer}
-                            onOpen={toggleDrawer}
-                            className={classes.drawer}
-                            classes = {{
-                                paper: classes.drawerPaper,
-                            }}
-                        >
-                            <List>
-                                {menuItemList.map((text) => (
-                                <ListItem button key={text} href="/about">
-                                    <ListItemText primary={text} />
-                                </ListItem>
-                                ))}
-                            </List>
-                        </SwipeableDrawer>
-                    </Hidden>
                 </Toolbar>
                 
             </AppBar>

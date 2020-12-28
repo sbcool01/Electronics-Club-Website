@@ -35,16 +35,15 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-
-function About() {
+function ContactUs() {
     const classes=useStyles();
     return (
         <div>
             <AppHeader appBarTitle="ELECTRONICS CLUB IIT GUWAHATI"/>
-            <Intro primaryText="About Us" secondaryText="Who we are and What we do" classes={classes}/>
+            <Intro primaryText="Contact Us" secondaryText="Excited to have you in Electronics club family" classes={classes}/>
             <AppFooter />
         </div>
     )
 }
 
-export default About;
+export default ContactUs;
