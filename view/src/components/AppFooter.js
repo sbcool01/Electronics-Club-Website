@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
     },
     attributeText: {
         fontSize: '8px'
+    },
+    container: {
+        marginTop: "40px",
     }
 }));
 
@@ -29,7 +32,7 @@ function AppFooter() {
     return (
         <Grid container spacing={2} justify="center" className={classes.topContainer}>
             <Grid item xs={12} sm={9} md={7}>
-                <Grid container spacing={2} justify="center">
+                <Grid container spacing={2} justify="center" className={classes.container}>
                     <Grid item xs={2} sm={1} className={classes.item}>
                         <Link href="https://www.instagram.com/electronicsclubiitg/">
                             <img src={instagramIcon} alt="Instagram" width="32" height="32" />
@@ -54,17 +57,17 @@ function AppFooter() {
             </Grid>  
             <Grid item xs={12}>
                 <center>
-                    <Typography className={classes.attributeText}>
+                    <Typography className={classes.attributeText} color="inherit">
                         {'Items made by '} 
-                        <Link href="https://www.flaticon.com/authors/freepik">
+                        <Link href="https://www.flaticon.com/authors/freepik" color="inherit">
                             Freepik
                         </Link>
                         {' and '} 
-                        <Link href="https://www.flaticon.com/authors/pixel-perfect">
+                        <Link href="https://www.flaticon.com/authors/pixel-perfect" color="inherit">
                             Pixel perfect
                         </Link>
                         {' from '}
-                        <Link href="https://www.flaticon.com/">
+                        <Link href="https://www.flaticon.com/" color="inherit">
                             www.flaticon.com
                         </Link>
                     </Typography>

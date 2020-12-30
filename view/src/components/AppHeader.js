@@ -41,27 +41,28 @@ function AppHeader(props) {
         setOpen(!open);
     }
 
-    const menuItemList=[['About Us', '/about'], ['Gallery', '/gallery'], ['Contact Us', 'contact-us']];
+    const menuItemList=[['About Us', '/about'], ['Blog', 'blog'], ['Gallery', '/gallery'], ['Contact Us', 'contact-us']];
 
     return (
         <div className={classes.root}>
             <AppBar position="static" className={classes.appBar}>
                 <Toolbar className={classes.toolbar}>
-                    <Button color="inherit" href="/" className={classes.title}>
+                    <Button color="primary" href="/" className={classes.title}>
                         {props.appBarTitle}
                     </Button>
                     <div className={classes.menu}>
                         <Hidden smDown>
-                            <Button color="inherit" href="/about">About Us</Button>
-                            <Button color="inherit" href="/gallery">Gallery</Button>
-                            <Button color="inherit" href="/contact-us">Contact Us</Button>
+                            <Button color="primary" href="/about">About Us</Button>
+                            <Button color="primary" href="/blog">Blog</Button>
+                            <Button color="primary" href="/gallery">Gallery</Button>
+                            <Button color="primary" href="/contact-us">Contact Us</Button>
                         </Hidden>
                         
                         <Hidden mdUp>
                             <IconButton 
                                 edge="end" 
                                 className={classes.menuButton} 
-                                color="inherit" 
+                                color="primary" 
                                 aria-label="menu" 
                                 onClick={toggleDrawer}
                             >

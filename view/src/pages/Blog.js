@@ -4,7 +4,6 @@ import AppFooter from "../components/AppFooter";
 import Intro from "../components/Intro";
 import { makeStyles } from '@material-ui/core/styles';
 import backgroundImage from '../resources/images/background.jpg';
-import ContactForm from "../components/ContactForm";
 
 const useStyles = makeStyles((theme) => ({
     backgroundDiv: {
@@ -36,16 +35,16 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function ContactUs() {
+
+function Blog() {
     const classes=useStyles();
     return (
         <div>
             <AppHeader appBarTitle="ELECTRONICS CLUB IIT GUWAHATI"/>
-            <Intro primaryText="Contact Us" secondaryText="Excited to have you in Electronics club family" classes={classes}/>
-            <ContactForm />
+            <Intro primaryText="Community Blog" secondaryText="Blogs contributed by Electronics Club Community of IITG" classes={classes}/>
             <AppFooter />
         </div>
     )
 }
 
-export default ContactUs;
+export default Blog;

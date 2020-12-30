@@ -40,7 +40,7 @@ function Gallery() {
     return (
         <div>
             <AppHeader appBarTitle="ELECTRONICS CLUB IIT GUWAHATI"/>
-            <Intro primaryText="Memories" secondaryText="Glimpse of our past activities" classes={classes}/>
+            <Intro primaryText="Gallery" secondaryText="Glimpse of our past activities" classes={classes}/>
             <AppFooter />
         </div>
     )
