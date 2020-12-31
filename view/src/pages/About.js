@@ -41,7 +41,7 @@ function About() {
     return (
         <div>
             <AppHeader appBarTitle="ELECTRONICS CLUB IIT GUWAHATI"/>
-            <Intro primaryText="About Us" secondaryText="Who we are and What we do" classes={classes}/>
+            <Intro primaryText="About Us" secondaryText="Who we are and What we do" pagename="About" classes={classes}/>
             <AppFooter />
         </div>
     )

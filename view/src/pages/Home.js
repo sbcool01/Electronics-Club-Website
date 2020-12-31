@@ -50,7 +50,7 @@ function Home() {
     return (
         <div>
             <AppHeader appBarTitle="ELECTRONICS CLUB IIT GUWAHATI"/>
-            <Intro primaryText="INNOVATION | APPLICATION" secondaryText="WE BELIEVE IN EXCELLENCE" classes={classes}/>
+            <Intro primaryText="INNOVATION | APPLICATION" secondaryText="WE BELIEVE IN EXCELLENCE" pagename="Home" classes={classes}/>
             <ClubPerks />
             <hr className={classes.line}></hr>
             <Team />

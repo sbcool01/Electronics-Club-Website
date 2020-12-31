@@ -41,7 +41,7 @@ function Blog() {
     return (
         <div>
             <AppHeader appBarTitle="ELECTRONICS CLUB IIT GUWAHATI"/>
-            <Intro primaryText="Community Blog" secondaryText="Blogs contributed by Electronics Club Community of IITG" classes={classes}/>
+            <Intro primaryText="Community Blog" secondaryText="Blogs contributed by Electronics Club Community of IITG" pagename="Blog" classes={classes}/>
             <AppFooter />
         </div>
     )
