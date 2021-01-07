@@ -289,6 +289,34 @@ app.post('/editProject/:projectId/leaveProject', function(request, response) {
     return response.json({status: "Added You To Project Successfully"});
 })
 
+app.delete('/deleteProject/:projectId', function(request, response) {
+    console.log("in delete Project");
+    let projectId = request.params.projectId;
+    Project.findById(projectId)
+    .then(async (project) => {
+        let status=project.status;
+        let members = [...project.teamMembersWithEmail, ...project.mentors];
+        for(let member of members) {
+            if(status==='Active'){
+                await User.findOneAndUpdate({email: member}, { $pull: { ongoingProjects: projectId } }, null, function(err, response){
+                    console.log("updated User: ", response);
+                });
+            }
+            if(status==='Completed'){
+              await User.findOneAndUpdate({email: member}, { $pull: { completedProjects: projectId } }, null, function(err, response){
+                console.log("updated User: ", response);
+              });
+            }
+        }
+        Project.deleteOne({_id: projectId}, (error) => {
+            if (error) {
+                console.log(error);
+            }
+        });
+    })
+    return response.json({status: "Project Deleted Successfully"});
+});
+
 app.listen(PORT, () => {
     console.log("server started on port 4000")
 });

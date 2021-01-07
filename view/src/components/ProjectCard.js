@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Typography, Button, Accordion, AccordionDetails, AccordionSummary, Chip, Card, CardHeader, CardMedia, CardContent, Hidden} from "@material-ui/core";
+import { Grid, Typography, Button, Accordion, AccordionDetails, AccordionSummary, Chip, Card, CardHeader, CardMedia, CardContent, Hidden, IconButton} from "@material-ui/core";
+import ConfirmationDialog from '../components/ConfirmationDialog';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({   
@@ -27,11 +29,20 @@ const useStyles = makeStyles((theme) => ({
     root: {
         maxWidth: 345,
     },
+    joinLeaveButton: {
+        display: 'flex',
+        alignItems: 'center',
+    },
+    deleteIcon: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+    }
 }));
 
 function Projects(props){
     const classes=useStyles();
-
+    const [openDeleteDialog, setOpenDeleteDialog]=useState(false);
     function checkIfMentorOrCreator() {
         const currentUserEmail = JSON.parse(localStorage.getItem('user')).email;
         let isEditEnabled = false;
@@ -89,6 +100,14 @@ function Projects(props){
         })
     }
 
+    function checkIfAdmin() {
+        return localStorage.getItem('isAdmin');
+    }
+
+    function handleDialogOpen(){
+        setOpenDeleteDialog(!openDeleteDialog);
+    }
+
     return (
         <Grid item xs={12} sm={6} md={4}>
             <Card className={classes.root}>
@@ -121,13 +140,29 @@ function Projects(props){
                         })
                     }  
                     </Typography>
+                    <Grid container>
+                        <Grid item xs={checkIfAdmin()? 8: 12} className={classes.joinLeaveButton}>
+                            {
+                                ((props.isAllActiveProjects)&&(!checkIfInTeam()))? <Button variant="contained" color="secondary" onClick={handleJoinProject}>Join The Team</Button>: null
+                            }
+                            {
+                                ((props.isAllActiveProjects)&&(checkIfInTeam()))? <Button variant="contained" color="secondary" onClick={handleLeaveProject}>Leave The Project</Button>: null
+                            }
+                        </Grid>
+                        {
+                            checkIfAdmin()? (
+                                <Grid item xs = {4} className={classes.deleteIcon}>
+                                    <IconButton onClick={handleDialogOpen}>
+                                        <DeleteIcon color="secondary" fontSize="large" />
+                                    </IconButton>
+                                </Grid>
+                            ):null
+                        }
+                    </Grid> 
                     {
-                        ((props.isAllActiveProjects)&&(!checkIfInTeam()))? <Button variant="contained" color="secondary" onClick={handleJoinProject}>Join The Team</Button>: null
+                        openDeleteDialog ? <ConfirmationDialog project={props.project} dialogTitle="Are you sure you want to delete this project" dialogContent="This Project will be deleted permanently and can't be restored." openDeleteDialog={openDeleteDialog} setOpenDeleteDialog={setOpenDeleteDialog}/>: null
                     }
-                    {
-                        ((props.isAllActiveProjects)&&(checkIfInTeam()))? <Button variant="contained" color="secondary" onClick={handleLeaveProject}>Leave The Project</Button>: null
-                    }                   
-                </CardContent>                                    
+                </CardContent>                                 
                 <Accordion>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}

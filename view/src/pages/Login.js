@@ -2,6 +2,7 @@ import React from "react";
 import {Button} from '@material-ui/core';
 import {microsoftAuth} from '../components/firebase/firebaseAuth';
 import axios from "axios";
+import teamDetails from '../content/TeamDetails';
 
 function Login(props) {
 
@@ -21,6 +22,14 @@ function Login(props) {
                 }
                 console.log("user: ", user);
                 localStorage.setItem('user', JSON.stringify(user));
+                teamDetails.forEach((teamPage) => {
+                    teamPage.forEach((teamMember) => {
+                        if(user.email === teamMember.email){
+                            localStorage.setItem('isAdmin', true);
+                        }
+                    })
+                })
+                
                 props.history.push('/user/'+ response.data.userId + '/projects');
             })
         }
