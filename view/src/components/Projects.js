@@ -5,27 +5,8 @@ import axios from 'axios';
 import ProjectCard from '../components/ProjectCard';
 
 const useStyles = makeStyles((theme) => ({   
-    alignLeft: {
-        display: 'flex',
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
-    },
-    accordionContainer: {
-        margin: '10px',
-    },
-    desc: {
-        textAlign: 'left',
-        margin: '10px',
-    },
     main: {
         width: '90%',
-    },
-    media: {
-        height: 0,
-        paddingTop: '56.25%', // 16:9
-    },
-    root: {
-        maxWidth: 345,
     },
 }));
 
