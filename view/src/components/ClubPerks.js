@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 
 function ClubPerks(){
     const classes = useStyles();
+
     return ( 
         <Grid container spacing={2} className={classes.container}>
             <Grid item xs={12} className={classes.alignCenter}>
@@ -50,7 +51,7 @@ function ClubPerks(){
                         <Grid item xs={12} className={classes.alignCenter}>
                             <Typography variant="body1">{item.content}</Typography>
                         </Grid>
-                        <Button variant="contained" color="secondary" className={classes.button}>{item.buttonText}</Button>
+                        <Button variant="contained" color="secondary" className={classes.button} href="/projects">{item.buttonText}</Button>
                     </Grid>
                 </Grid>
             )): null}

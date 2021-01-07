@@ -41,7 +41,7 @@ function AppHeader(props) {
         setOpen(!open);
     }
 
-    const menuItemList=[['About Us', '/about'], ['Blog', 'blog'], ['Gallery', '/gallery'], ['Contact Us', 'contact-us']];
+    const menuItemList=[['About Us', '/about'], ['Blog', '/blog'], ['Gallery', '/gallery'], ['Contact Us', '/contact-us']];
 
     return (
         <div className={classes.root}>
@@ -87,10 +87,8 @@ function AppHeader(props) {
                                 </List>
                             </SwipeableDrawer>
                         </Hidden>
-                    </div>
-                    
-                </Toolbar>
-                
+                    </div>                   
+                </Toolbar>              
             </AppBar>
         </div>
     );

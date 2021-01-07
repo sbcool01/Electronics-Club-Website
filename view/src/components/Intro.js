@@ -18,7 +18,7 @@ function Intro(props) {
             </div>
             {
                 (props.pagename==="Home")? 
-                <center><Button variant="contained" color="secondary" className={classes.button} size='large'>Sign In</Button></center>
+                <center><Button variant="contained" color="secondary" className={classes.button} size='large' href='/login'>Sign In</Button></center>
                 :null
             }
             <Link href='https://pngtree.com/free-backgrounds' className={props.classes.attributeText}>free background photos from pngtree.com</Link>

@@ -7,6 +7,10 @@ import ContactUs from "./pages/ContactUs";
 import Gallery from "./pages/Gallery";
 import Blog from "./pages/Blog";
 import theme from "./components/theme";
+import ProjectsPage from "./pages/ProjectsPage";
+import Testing from "./components/testing";
+import Login from "./pages/Login";
+import UserProjects from "./pages/UserProjects";
 
 function App() {
     return (
@@ -19,7 +23,10 @@ function App() {
                         <Route exact path="/contact-us" component={ContactUs}/>
                         <Route exact path="/gallery" component={Gallery}/>
                         <Route exact path="/blog" component={Blog}/>
-                        {/* <Route strict path="/about" render={(props) => <About {...props} />}/> */}
+                        <Route exact path="/projects" component={ProjectsPage}/>
+                        <Route exact path="/testing" component={Testing}/>
+                        <Route exact path="/login" component={Login}/>
+                        <Route exact path="/user/:userId/projects" render={(props) => <UserProjects {...props}/>}/>
                     </ThemeProvider>
                 </Switch>             
             </div>
