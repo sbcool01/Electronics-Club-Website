@@ -50,6 +50,7 @@ function AddProjectDialog(props) {
     let [prevValue, setPrevValue] = useState(false);
 
     useEffect(() => {
+        console.log("props.project: ", props.project);
         if((!prevValue)&&(props.project)){
             const updateProject = {
                 name: props.project.name,
@@ -150,7 +151,7 @@ function AddProjectDialog(props) {
     }
 
     return (
-        <Container maxWidth="sm" style={{padding: '10px'}}>           
+        <Container maxWidth="sm" style={{padding: '10px'}}>          
             <Dialog
             fullWidth
             open={props.addProjectDialog}
@@ -163,7 +164,7 @@ function AddProjectDialog(props) {
                     <form >
                         <Grid container>
                             <Grid item xs={12} style={{padding: '10px'}}>
-                                <TextField fullWidth variant= "outlined" required name="name" label="Project Name" defaultValue="" value={project.projectName} onChange={handleChange}/>
+                                <TextField fullWidth variant= "outlined" required name="name" label="Project Name" defaultValue="" value={project.name} onChange={handleChange}/>
                             </Grid>
                             <Grid item xs={12} sm={6} style={{padding: '10px'}}>
                                 <TextField fullWidth variant= "outlined" required name="domain" label="Domain" defaultValue="" value={project.domain} onChange={handleChange}/>
