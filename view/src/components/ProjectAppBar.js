@@ -54,7 +54,7 @@ function ProjectAppBar(props) {
         if(response.isLogOut){
             localStorage.removeItem('user');
             localStorage.removeItem('isAdmin');
-            props.history([]);
+            window.history.replaceState(null, null, "/");
             setLogOutStatus(true);
         }
     }
