@@ -50,8 +50,7 @@ function AddProjectDialog(props) {
     let [prevValue, setPrevValue] = useState(false);
 
     useEffect(() => {
-        console.log("props.project: ", props.project);
-        if((!prevValue)&&(props.project)){
+        if((!prevValue)&&(!props.isNewProject)){
             const updateProject = {
                 name: props.project.name,
                 domain: props.project.domain,
@@ -67,7 +66,7 @@ function AddProjectDialog(props) {
             setProject(updateProject);
             setPrevValue(false);
         }
-    }, [prevValue, props.project]);
+    }, [prevValue, props]);
 
     function handleChange(event) {
         let element=event.target.name;
@@ -134,19 +133,20 @@ function AddProjectDialog(props) {
     }
 
     function handleSubmit() {
-        if(props.project){
-            console.log("edit handle called");
+        if((props.project)&&(props.project._id)){
             axios.post('http://localhost:4000/editProject/' + props.project._id.toString(), project)
             .then((response) => {
                 console.log("response: ", response);
             });
             handleClose();
+            window.location.reload();
         } else {
             axios.post('http://localhost:4000/addNewProject', project)
             .then((response) => {
                 console.log("response: ", response);
             });
             handleClose();
+            window.location.reload();
         }       
     }
 
@@ -210,7 +210,7 @@ function AddProjectDialog(props) {
                                         (!(project.name))||
                                         (!(project.desc))||(!(project.domain))||
                                         (!(project.status))||
-                                        (project.tags.length===0)||
+                                        ((!project.tags)||((project.tags)&&(project.tags.length===0)))||
                                         (!(project.url))
                                     }
                                     onClick={handleSubmit}

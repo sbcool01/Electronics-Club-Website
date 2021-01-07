@@ -1,8 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Typography, Accordion, AccordionDetails, AccordionSummary, Chip, Card, CardHeader, CardMedia, CardContent, Hidden} from "@material-ui/core";
+import { Grid, Typography, Button, Accordion, AccordionDetails, AccordionSummary, Chip, Card, CardHeader, CardMedia, CardContent, Hidden} from "@material-ui/core";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import EditIcon from '@material-ui/icons/Edit';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({   
     alignLeft: {
@@ -31,19 +32,61 @@ const useStyles = makeStyles((theme) => ({
 function Projects(props){
     const classes=useStyles();
 
-    function checkIfMentorOrCreator(project) {
+    function checkIfMentorOrCreator() {
         const currentUserEmail = JSON.parse(localStorage.getItem('user')).email;
         let isEditEnabled = false;
-        for(let mentor in project.mentors) {
+        for(let mentor of props.project.mentors) {
             if(mentor === currentUserEmail){
                 isEditEnabled = true;
                 break;
             }
         }
-        if(currentUserEmail === project.AddedBy) {
+        if(currentUserEmail === props.project.AddedBy) {
             isEditEnabled = true;
         }
         return isEditEnabled;
+    }
+
+    function checkIfInTeam() {
+        const currentUserEmail = JSON.parse(localStorage.getItem('user')).email;
+        let inTeam = false;
+        for(let member of props.project.mentors) {
+            if(member === currentUserEmail){
+                inTeam = true;
+                break;
+            }
+        }
+        for(let member of props.project.teamMembersWithEmail) {
+            if(member === currentUserEmail){
+                inTeam = true;
+                break;
+            }
+        }
+        return inTeam;
+    }
+
+    function handleJoinProject() {
+        const currentUserEmail = JSON.parse(localStorage.getItem('user')).email;
+        axios.post('http://localhost:4000/editProject/' + props.project._id.toString() + '/joinProject', {user: currentUserEmail})
+        .then((response) => {
+            console.log("response: ", response);
+            window.location.reload();
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    }
+
+    function handleLeaveProject() {
+        const currentUserEmail = JSON.parse(localStorage.getItem('user')).email;
+        axios.post('http://localhost:4000/editProject/' + props.project._id.toString() + '/leaveProject', {user: currentUserEmail})
+        .then((response) => {
+            console.log("response: ", response);
+            window.location.reload();          
+        })
+        .catch((error) => {
+            console.log(error);
+        })
     }
 
     return (
@@ -51,7 +94,7 @@ function Projects(props){
             <Card className={classes.root}>
                 <CardHeader      
                     action={                       
-                        (props.handleEdit && checkIfMentorOrCreator(props.project))? <EditIcon onClick={() => props.handleEdit(props.project)} />: null                                      
+                        (props.handleEdit && checkIfMentorOrCreator())? <EditIcon onClick={() => props.handleEdit(props.project)} />: null                                      
                     }
                     title={props.project.name}
                     subheader={props.project.domain}
@@ -77,7 +120,13 @@ function Projects(props){
                             return (<Chip size="small" label={tag} style={{margin: '2px'}} className={classes.desc}/>)
                         })
                     }  
-                    </Typography>                     
+                    </Typography>
+                    {
+                        ((props.isAllActiveProjects)&&(!checkIfInTeam()))? <Button variant="contained" color="secondary" onClick={handleJoinProject}>Join The Team</Button>: null
+                    }
+                    {
+                        ((props.isAllActiveProjects)&&(checkIfInTeam()))? <Button variant="contained" color="secondary" onClick={handleLeaveProject}>Leave The Project</Button>: null
+                    }                   
                 </CardContent>                                    
                 <Accordion>
                     <AccordionSummary
@@ -108,11 +157,11 @@ function Projects(props){
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={12} style={{margin: '5px'}} className={classes.alignLeft}>                                                   
-                                        {                                        
-                                            props.project.mentors.map(mentor => {
-                                                return (<Chip size="small" label={mentor} style={{margin: '2px'}}/>)
-                                            })
-                                        }                                                                                                       
+                                    {                                        
+                                        props.project.mentors.map(mentor => {
+                                            return (<Chip size="small" label={mentor} style={{margin: '2px'}}/>)
+                                        })
+                                    }                                                                                                       
                                 </Grid>            
                             </Grid>  
                             <Grid container className={classes.accordionContainer}>

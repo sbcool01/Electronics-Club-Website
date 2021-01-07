@@ -38,16 +38,16 @@ const User = new mongoose.model("User", userSchema);
 const Project = new mongoose.model('Project', projectSchema);
 
 app.post('/addNewProject', async function(request, response){
-    // console.log("body: ", request.body);
+    console.log("body: ", request.body);
     let projectId="";
     const newProject=new Project(request.body);
     const mentors=request.body.mentors;
+    console.log("mentors: ", mentors);
     await newProject.save(async (err, project) => {
         if(err){
           return err;
         } else {
           projectId = project._id.toString();
-          console.log("projectId inside: ", projectId);
           for(let mentor of mentors){
               if(request.body.status==='Active'){
                   await User.findOneAndUpdate({email: mentor}, { $addToSet: { ongoingProjects: projectId } }, null, function(err, response){
@@ -149,7 +149,7 @@ app.post('/editProject/:projectId', async function(request, response){
             doc[id]= request.body[id];
         }
         doc.save( (error) => {
-            console.log("changes done");
+            console.log(error);
         })
     })
     .catch(error => {
@@ -244,6 +244,49 @@ app.post('/createUser', async function(request, response){
       }
     });
     return response.json({status: "Added User Successfully", userId: userId});
+})
+
+app.post('/editProject/:projectId/joinProject', function(request, response) {
+    console.log("request body: ", request.body);
+    let projectId = request.params.projectId;
+    Project.findById(projectId)
+    .then(async (project) => {
+        let newMember = request.body.user;
+        await User.findOneAndUpdate({email: newMember}, { $addToSet: { ongoingProjects: projectId } }, null, function(err, response){
+            console.log("updated User: ", response);
+        });
+        project['teamMembersWithEmail'].push(newMember);
+        project.save((error) => {
+            console.log(error);
+        })
+    })
+    return response.json({status: "Added You To Project Successfully"});
+})
+
+app.post('/editProject/:projectId/leaveProject', function(request, response) {
+    console.log("request body: ", request.body);
+    let projectId = request.params.projectId;
+    Project.findById(projectId)
+    .then(async (project) => {
+        let memberToBeRemoved = request.body.user;
+        await User.findOneAndUpdate({email: memberToBeRemoved}, { $pull: { ongoingProjects: projectId } }, null, function(err, response){
+            console.log("updated User: ", response);
+        });
+        for(let i in project.mentors) {
+            if(project.mentors[i] === memberToBeRemoved){
+                project.mentors.splice(i, 1);
+            }
+        }
+        for(let i in project.teamMembersWithEmail) {
+            if(project.teamMembersWithEmail[i] === memberToBeRemoved){
+                project.teamMembersWithEmail.splice(i, 1);
+            }
+        }
+        project.save((error) => {
+            console.log(error);
+        })
+    })
+    return response.json({status: "Added You To Project Successfully"});
 })
 
 app.listen(PORT, () => {

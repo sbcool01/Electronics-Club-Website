@@ -53,6 +53,7 @@ function ProjectAppBar(props) {
         console.log("response: ", response);
         if(response.isLogOut){
             localStorage.removeItem('user');
+            props.history([]);
             setLogOutStatus(true);
         }
     }
@@ -64,6 +65,7 @@ function ProjectAppBar(props) {
                 console.log("response: ", response);           
                 props.setProjects(response.data.projects);
                 props.setStatus("All Active Club Projects");
+                props.setIsAllActiveProjects(true);
             });
     }
 
@@ -74,6 +76,7 @@ function ProjectAppBar(props) {
             console.log("response: ", response);            
             props.setProjects(response.data.projects);
             props.setStatus("Your Ongoing Projects");
+            props.setIsAllActiveProjects(false);
         });
     }
 
@@ -84,11 +87,13 @@ function ProjectAppBar(props) {
             console.log("response: ", response);            
             props.setProjects(response.data.projects);
             props.setStatus("Your Completed Projects");
+            props.setIsAllActiveProjects(false);
         });
     }
 
     function addNewProject() {
         props.setAddProjectDialog(!props.addProjectDialog);
+        props.setIsNewProject(true);
     }
 
     const menuItemList=[['All Active Projects', loadAllActiveProjects], ['Ongoing', loadOngoingProjects], ['Completed', loadCompletedProjects], ['Add Project', addNewProject]];

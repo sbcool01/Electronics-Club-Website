@@ -24,6 +24,8 @@ function UserProjects() {
     let [status, setStatus] = useState("");
     let [addProjectDialog, setAddProjectDialog] = useState(false);
     let [editProject, setEditProject] = useState({});
+    let [isNewProject, setIsNewProject] = useState(true);
+    let [isAllActiveProjects, setIsAllActiveProjects] = useState(true);
 
     useEffect(() => {
         axios.get('http://localhost:4000/getAllActiveProjects')
@@ -36,12 +38,13 @@ function UserProjects() {
     function handleEdit(project) {
         console.log("in handle edit project", project);
         setEditProject(project);
-        setAddProjectDialog(true);    
+        setAddProjectDialog(true);
+        setIsNewProject(false);    
     }
 
     return (
         <div>
-            <ProjectAppBar setProjects={setProjects} setStatus={setStatus} setAddProjectDialog={setAddProjectDialog} addProjectDialog={addProjectDialog} />
+            <ProjectAppBar setProjects={setProjects} setStatus={setStatus} setAddProjectDialog={setAddProjectDialog} addProjectDialog={addProjectDialog} setIsNewProject={setIsNewProject} setIsAllActiveProjects={setIsAllActiveProjects}/>
             {status? <Typography variant="h4" className={classes.status}>{status}</Typography> :null}
             <center>
                 <Grid container spacing={5} className={classes.main}>
@@ -49,7 +52,7 @@ function UserProjects() {
                         projects? projects.map(project => {
                             console.log(project);
                             return (
-                                <ProjectCard project={project} handleEdit={handleEdit} />
+                                <ProjectCard project={project} handleEdit={handleEdit} isAllActiveProjects={isAllActiveProjects} />
                             )                 
                         })
                         :null
@@ -58,7 +61,7 @@ function UserProjects() {
             </center>
             {
                 (addProjectDialog)? 
-                <AddProjectDialog setAddProjectDialog={setAddProjectDialog} addProjectDialog={addProjectDialog} project={editProject}/>
+                <AddProjectDialog setAddProjectDialog={setAddProjectDialog} addProjectDialog={addProjectDialog} project={editProject} isNewProject={isNewProject}/>
                 :null
             }
         </div>
