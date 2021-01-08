@@ -11,6 +11,7 @@ import ProjectsPage from "./pages/ProjectsPage";
 import Testing from "./components/testing";
 import Login from "./pages/Login";
 import UserProjects from "./pages/UserProjects";
+import ShareNewIdea from "./pages/ShareNewIdea";
 
 function App() {
     return (
@@ -26,6 +27,7 @@ function App() {
                         <Route exact path="/projects" component={ProjectsPage}/>
                         <Route exact path="/testing" component={Testing}/>
                         <Route exact path="/login" component={Login}/>
+                        <Route exact path="/submitNewIdea" component={ShareNewIdea}/>
                         <Route exact path="/user/:userId/projects" render={(props) => <UserProjects {...props}/>}/>
                     </ThemeProvider>
                 </Switch>             
