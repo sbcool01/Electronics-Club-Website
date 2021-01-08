@@ -40,7 +40,7 @@ function LoginCard(props) {
                 <Typography variant="h5">Login and Apply for Projects</Typography>
             </Grid>
             <Grid item xs={12} className={classes.signInButton}>
-                <Button variant="contained" color="secondary" onClick={props.handleLogin}>Sign In IITG Outlook Id</Button>
+                <Button variant="contained" size="large" color="secondary" onClick={props.handleLogin}>Sign In IITG Outlook Id</Button>
             </Grid>
         </Grid>
     )
