@@ -132,7 +132,7 @@ function Projects(props){
                 </Hidden>
                 <CardContent>
                     <Typography style={{marginBottom: '10px'}} className={classes.desc}>
-                        10 Dec 2020
+                        {props.project.date}
                     </Typography>   
                     <Typography style={{marginBottom: '10px'}} className={classes.desc}>
                         Tags:

@@ -1,6 +1,7 @@
 const {mongoose} = require('./ExpressMongooseSetup');
 
 const projectSchema = mongoose.Schema({
+    date: String,
     name: String,
     domain: String,
     desc: String,

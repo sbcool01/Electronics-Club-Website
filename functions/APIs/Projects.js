@@ -15,7 +15,15 @@ function getAllActiveProjects(request, response){
 
 async function addNewProject(request, response){
     let projectId="";
-    const newProject=new Project(request.body);
+    let newProject=new Project(request.body);
+    let currentDate = new Date();
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    let date = currentDate.getDate().toString();
+    date += ' ';
+    date += (months[currentDate.getMonth()]).slice(0, 3);
+    date += ' ';
+    date += currentDate.getFullYear().toString();
+    newProject.date=date;
     const mentors=request.body.mentors;
     await newProject.save(async (err, project) => {
         if(err){
