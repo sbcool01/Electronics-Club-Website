@@ -120,11 +120,14 @@ function AddProjectDialog(props) {
     }
 
     function handleUpload() {    
-        const uploadTask = storage.ref(`/images/${file.name}`).put(file);
+        var d = new Date();
+        var filename = file.name.split('.').slice(0, -1).join('.') + d.getTime().toString().slice(-10) + '.' + file.name.split('.').slice(-1);
+        console.log("filename: ", filename)
+        const uploadTask = storage.ref(`/images/${filename}`).put(file);
         uploadTask.on("state_changed", console.log, console.error, () => {
           storage
             .ref("images")
-            .child(file.name)
+            .child(filename)
             .getDownloadURL()
             .then((url) => {
                 handleURL(url);
