@@ -8,6 +8,7 @@ import LoginCard from "../components/LoginCard";
 import teamDetails from '../content/TeamDetails';
 import {microsoftAuth} from '../components/firebase/firebaseAuth';
 import axios from "axios";
+require('dotenv').config();
 
 const useStyles = makeStyles((theme) => ({
     backgroundDiv: {
@@ -46,6 +47,7 @@ function Login(props) {
 
     let user={};
     async function handleLogin() {
+        console.log("process.env: ", process.env.REACT_APP_firebaseapiKey);
         const response = await microsoftAuth();
         if(response.isLoginSuccessful){
             user = {

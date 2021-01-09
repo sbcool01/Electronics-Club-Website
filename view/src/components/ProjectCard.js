@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Typography, Button, Accordion, AccordionDetails, AccordionSummary, Chip, Card, CardHeader, CardMedia, CardContent, Hidden, IconButton, Avatar} from "@material-ui/core";
+import { Grid, Typography, Button, Accordion, AccordionDetails, AccordionSummary, Chip, Card, CardHeader, CardContent, Hidden, IconButton, Avatar} from "@material-ui/core";
 import ConfirmationDialog from '../components/ConfirmationDialog';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import EditIcon from '@material-ui/icons/Edit';

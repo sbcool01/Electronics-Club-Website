@@ -1,4 +1,3 @@
-const {app} = require('../util/ExpressMongooseSetup');
 const {User, Project} = require('../util/MongooseModel');
 const lodash = require('lodash');
 

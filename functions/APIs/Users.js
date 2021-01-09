@@ -1,6 +1,4 @@
-const {app} = require('../util/ExpressMongooseSetup');
 const {User, Project} = require('../util/MongooseModel');
-const lodash = require('lodash');
 
 async function getUserActiveProjects(request, response) {
     let userActiveProjectIds = [];
