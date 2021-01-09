@@ -121,7 +121,7 @@ function AddProjectDialog(props) {
 
     function handleUpload() {    
         var d = new Date();
-        var filename = file.name.split('.').slice(0, -1).join('.') + d.getTime().toString().slice(-10) + '.' + file.name.split('.').slice(-1);
+        var filename = file.name.split('.').slice(0, -1).join('.') + d.getTime().toString().slice(-12) + '.' + file.name.split('.').slice(-1);
         console.log("filename: ", filename)
         const uploadTask = storage.ref(`/images/${filename}`).put(file);
         uploadTask.on("state_changed", console.log, console.error, () => {
