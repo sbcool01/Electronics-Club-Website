@@ -96,7 +96,7 @@ function HowToJoin() {
                 <Typography variant="h4" color="primary" className={classes.participateText}>Participate and you are among us</Typography>
             </Grid>
             <Grid item xs={12} className={classes.alignCenter}>
-                <Button variant="contained" color="secondary" className={classes.button}>SUBMIT NEW IDEA</Button>
+                <Button variant="contained" color="secondary" className={classes.button} href='/submitNewIdea'>SUBMIT NEW IDEA</Button>
             </Grid>
             <Grid item xs={12} className={classes.attributeItem}>
                     <Typography className={classes.attributeText} color="primary">

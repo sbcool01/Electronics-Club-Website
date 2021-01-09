@@ -50,7 +50,7 @@ function AddProjectDialog(props) {
     let [prevValue, setPrevValue] = useState(false);
 
     useEffect(() => {
-        if((!prevValue)&&(props.project)){
+        if((!prevValue)&&(!props.isNewProject)){
             const updateProject = {
                 name: props.project.name,
                 domain: props.project.domain,
@@ -66,7 +66,7 @@ function AddProjectDialog(props) {
             setProject(updateProject);
             setPrevValue(false);
         }
-    }, [prevValue, props.project]);
+    }, [prevValue, props]);
 
     function handleChange(event) {
         let element=event.target.name;
@@ -120,11 +120,14 @@ function AddProjectDialog(props) {
     }
 
     function handleUpload() {    
-        const uploadTask = storage.ref(`/images/${file.name}`).put(file);
+        var d = new Date();
+        var filename = file.name.split('.').slice(0, -1).join('.') + d.getTime().toString().slice(-12) + '.' + file.name.split('.').slice(-1);
+        console.log("filename: ", filename)
+        const uploadTask = storage.ref(`/images/${filename}`).put(file);
         uploadTask.on("state_changed", console.log, console.error, () => {
           storage
             .ref("images")
-            .child(file.name)
+            .child(filename)
             .getDownloadURL()
             .then((url) => {
                 handleURL(url);
@@ -133,24 +136,25 @@ function AddProjectDialog(props) {
     }
 
     function handleSubmit() {
-        if(props.project){
-            console.log("edit handle called");
-            axios.post('http://localhost:4000/editProject/' + props.project._id.toString(), project)
+        if((props.project)&&(props.project._id)){
+            axios.post('/editProject/' + props.project._id.toString(), project)
             .then((response) => {
                 console.log("response: ", response);
             });
             handleClose();
+            window.location.reload();
         } else {
-            axios.post('http://localhost:4000/addNewProject', project)
+            axios.post('/addNewProject', project)
             .then((response) => {
                 console.log("response: ", response);
             });
             handleClose();
+            window.location.reload();
         }       
     }
 
     return (
-        <Container maxWidth="sm" style={{padding: '10px'}}>           
+        <Container maxWidth="sm" style={{padding: '10px'}}>          
             <Dialog
             fullWidth
             open={props.addProjectDialog}
@@ -163,7 +167,7 @@ function AddProjectDialog(props) {
                     <form >
                         <Grid container>
                             <Grid item xs={12} style={{padding: '10px'}}>
-                                <TextField fullWidth variant= "outlined" required name="name" label="Project Name" defaultValue="" value={project.projectName} onChange={handleChange}/>
+                                <TextField fullWidth variant= "outlined" required name="name" label="Project Name" defaultValue="" value={project.name} onChange={handleChange}/>
                             </Grid>
                             <Grid item xs={12} sm={6} style={{padding: '10px'}}>
                                 <TextField fullWidth variant= "outlined" required name="domain" label="Domain" defaultValue="" value={project.domain} onChange={handleChange}/>
@@ -182,20 +186,20 @@ function AddProjectDialog(props) {
                                 <TextField fullWidth variant= "outlined" required name="desc" label="Description" value={project.desc} multiline rows={4} rowsMax={8} defaultValue="" onChange={handleChange}/>
                             </Grid>
                             <Grid item xs={12} style={{padding: '10px'}}>
-                                <ChipInput required fullWidth variant="outlined" name="tags" label="Tags" value={project.tags} onAdd={(chip) => handleAddChip("tags", chip)} onDelete={(chip, index) => handleDeleteChip("tags", chip, index)} />
+                                <ChipInput required fullWidth variant="outlined" name="tags" label="Tags" placeholder='Type and press enter to add chips' value={project.tags} onAdd={(chip) => handleAddChip("tags", chip)} onDelete={(chip, index) => handleDeleteChip("tags", chip, index)} />
                             </Grid>
                             <Grid item xs={12} style={{padding: '10px'}}>
-                                <ChipInput fullWidth variant="outlined" name="mentors" label="Add Mentors By Email"  value={project.mentors} onAdd={(chip) => handleAddChip("mentors", chip)} onDelete={(chip, index) => handleDeleteChip("mentors", chip, index)} />
+                                <ChipInput fullWidth variant="outlined" name="mentors" label="Add Mentors By Email"  placeholder='Type and press enter to add chips' value={project.mentors} onAdd={(chip) => handleAddChip("mentors", chip)} onDelete={(chip, index) => handleDeleteChip("mentors", chip, index)} />
                             </Grid>
                             <Grid item xs={12} style={{padding: '10px'}}>
-                                <ChipInput fullWidth variant="outlined" name="teamMembersWithEmail" label="Add Team Members By Email"  value={project.teamMembersWithEmail} onAdd={(chip) => handleAddChip("teamMembersWithEmail", chip)} onDelete={(chip, index) => handleDeleteChip("teamMembers", chip, index)} />
+                                <ChipInput fullWidth variant="outlined" name="teamMembersWithEmail" label="Add Team Members By Email"  placeholder='Type and press enter to add chips' value={project.teamMembersWithEmail} onAdd={(chip) => handleAddChip("teamMembersWithEmail", chip)} onDelete={(chip, index) => handleDeleteChip("teamMembersWithEmail", chip, index)} />
                             </Grid>
                             <Grid item xs={12} style={{padding: '10px'}}>
-                                <ChipInput fullWidth variant="outlined" name="teamMembersWithName" label="Add Team Members By Name" value={project.teamMembersWithName} onAdd={(chip) => handleAddChip("teamMembersWithName", chip)} onDelete={(chip, index) => handleDeleteChip("otherTeamMembers", chip, index)}/>
+                                <ChipInput fullWidth variant="outlined" name="teamMembersWithName" label="Add Team Members By Name" placeholder='Type and press enter to add chips' value={project.teamMembersWithName} onAdd={(chip) => handleAddChip("teamMembersWithName", chip)} onDelete={(chip, index) => handleDeleteChip("teamMembersWithName", chip, index)}/>
                             </Grid>
                             <Grid item xs={12} style={{padding: '10px'}}>
                                 <center>
-                                <input required type="file" onChange={handleFile} ref={inputFile}/>
+                                <input required type="file" onChange={handleFile} accept="image/*" ref={inputFile}/>
                                 <Button onClick={removeFile}>Remove File</Button>
                                 <Button disabled={!file} onClick={handleUpload}>Upload</Button>
                                 </center>
@@ -209,7 +213,7 @@ function AddProjectDialog(props) {
                                         (!(project.name))||
                                         (!(project.desc))||(!(project.domain))||
                                         (!(project.status))||
-                                        (project.tags.length===0)||
+                                        ((!project.tags)||((project.tags)&&(project.tags.length===0)))||
                                         (!(project.url))
                                     }
                                     onClick={handleSubmit}

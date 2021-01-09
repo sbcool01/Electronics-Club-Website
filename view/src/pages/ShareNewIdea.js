@@ -42,7 +42,7 @@ function ContactUs() {
         <div>
             <AppHeader appBarTitle="ELECTRONICS CLUB IIT GUWAHATI"/>
             <Intro primaryText="Contact Us" secondaryText="Excited to have you in Electronics club family" pagename="Contact" classes={classes}/>
-            <ContactForm pagename="ContactUs"/>
+            <ContactForm pagename="ShareNewIdea"/>
             <AppFooter />
         </div>
     )

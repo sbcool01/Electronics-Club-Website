@@ -50,45 +50,47 @@ function ProjectAppBar(props) {
 
     async function handleLogOut() {
         const response = await microsoftLogOut();
-        console.log("response: ", response);
         if(response.isLogOut){
             localStorage.removeItem('user');
+            localStorage.removeItem('isAdmin');
+            window.history.replaceState(null, null, "/");
             setLogOutStatus(true);
         }
     }
 
     function loadAllActiveProjects() {
-        console.log("loadAllprojects");
-        axios.get('http://localhost:4000/getAllActiveProjects')
+        axios.get('/getAllActiveProjects')
             .then(response => {  
                 console.log("response: ", response);           
                 props.setProjects(response.data.projects);
                 props.setStatus("All Active Club Projects");
+                props.setIsAllActiveProjects(true);
             });
     }
 
     function loadOngoingProjects() {
-        console.log("loadOngoingprojects");
-        axios.get('http://localhost:4000/user/'+ user.userId +'/getUserActiveProjects')
+        axios.get('/user/'+ user.userId +'/getUserActiveProjects')
         .then(response => { 
             console.log("response: ", response);            
             props.setProjects(response.data.projects);
             props.setStatus("Your Ongoing Projects");
+            props.setIsAllActiveProjects(false);
         });
     }
 
     function loadCompletedProjects() {
-        console.log("loadCompletedprojects");
-        axios.get('http://localhost:4000/user/'+ user.userId +'/getUserCompletedProjects')
+        axios.get('/user/'+ user.userId +'/getUserCompletedProjects')
         .then(response => {
             console.log("response: ", response);            
             props.setProjects(response.data.projects);
             props.setStatus("Your Completed Projects");
+            props.setIsAllActiveProjects(false);
         });
     }
 
     function addNewProject() {
         props.setAddProjectDialog(!props.addProjectDialog);
+        props.setIsNewProject(true);
     }
 
     const menuItemList=[['All Active Projects', loadAllActiveProjects], ['Ongoing', loadOngoingProjects], ['Completed', loadCompletedProjects], ['Add Project', addNewProject]];
