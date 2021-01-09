@@ -49,6 +49,7 @@ async function createUser(request, response) {
   await User.findOne({ 'email': request.body.email, 'name': request.body.name}, function (error, user) {
       if(error){
           console.log(error);
+          return response.json({error: error});
       }
       if(user===null){
           const newUser=new User({
@@ -62,14 +63,15 @@ async function createUser(request, response) {
               return error;
             } else {
               userId=user._id.toString();
+              return response.json({status: "Added User Successfully", userId: userId});
             }
           })
       }
       else {
           userId=user._id.toString();
+          return response.json({status: "Added User Successfully", userId: userId});
       }
     });
-    return response.json({status: "Added User Successfully", userId: userId});
 }
 
 function joinProject(request, response) {

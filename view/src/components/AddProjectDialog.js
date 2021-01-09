@@ -186,16 +186,16 @@ function AddProjectDialog(props) {
                                 <TextField fullWidth variant= "outlined" required name="desc" label="Description" value={project.desc} multiline rows={4} rowsMax={8} defaultValue="" onChange={handleChange}/>
                             </Grid>
                             <Grid item xs={12} style={{padding: '10px'}}>
-                                <ChipInput required fullWidth variant="outlined" name="tags" label="Tags" value={project.tags} onAdd={(chip) => handleAddChip("tags", chip)} onDelete={(chip, index) => handleDeleteChip("tags", chip, index)} />
+                                <ChipInput required fullWidth variant="outlined" name="tags" label="Tags" placeholder='Type and press enter to add chips' value={project.tags} onAdd={(chip) => handleAddChip("tags", chip)} onDelete={(chip, index) => handleDeleteChip("tags", chip, index)} />
                             </Grid>
                             <Grid item xs={12} style={{padding: '10px'}}>
-                                <ChipInput fullWidth variant="outlined" name="mentors" label="Add Mentors By Email"  value={project.mentors} onAdd={(chip) => handleAddChip("mentors", chip)} onDelete={(chip, index) => handleDeleteChip("mentors", chip, index)} />
+                                <ChipInput fullWidth variant="outlined" name="mentors" label="Add Mentors By Email"  placeholder='Type and press enter to add chips' value={project.mentors} onAdd={(chip) => handleAddChip("mentors", chip)} onDelete={(chip, index) => handleDeleteChip("mentors", chip, index)} />
                             </Grid>
                             <Grid item xs={12} style={{padding: '10px'}}>
-                                <ChipInput fullWidth variant="outlined" name="teamMembersWithEmail" label="Add Team Members By Email"  value={project.teamMembersWithEmail} onAdd={(chip) => handleAddChip("teamMembersWithEmail", chip)} onDelete={(chip, index) => handleDeleteChip("teamMembersWithEmail", chip, index)} />
+                                <ChipInput fullWidth variant="outlined" name="teamMembersWithEmail" label="Add Team Members By Email"  placeholder='Type and press enter to add chips' value={project.teamMembersWithEmail} onAdd={(chip) => handleAddChip("teamMembersWithEmail", chip)} onDelete={(chip, index) => handleDeleteChip("teamMembersWithEmail", chip, index)} />
                             </Grid>
                             <Grid item xs={12} style={{padding: '10px'}}>
-                                <ChipInput fullWidth variant="outlined" name="teamMembersWithName" label="Add Team Members By Name" value={project.teamMembersWithName} onAdd={(chip) => handleAddChip("teamMembersWithName", chip)} onDelete={(chip, index) => handleDeleteChip("teamMembersWithName", chip, index)}/>
+                                <ChipInput fullWidth variant="outlined" name="teamMembersWithName" label="Add Team Members By Name" placeholder='Type and press enter to add chips' value={project.teamMembersWithName} onAdd={(chip) => handleAddChip("teamMembersWithName", chip)} onDelete={(chip, index) => handleDeleteChip("teamMembersWithName", chip, index)}/>
                             </Grid>
                             <Grid item xs={12} style={{padding: '10px'}}>
                                 <center>

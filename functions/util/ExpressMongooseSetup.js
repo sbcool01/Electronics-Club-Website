@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.static("public"));
 app.use(express.json());
 
-mongoose.connect('mongodb://localhost:27017/electronics-club-test', {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
+mongoose.connect('mongodb+srv://admin_elec_club:electronicslife@cluster0.tormy.mongodb.net/Elec-Club-Database', {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
 mongoose.set('useFindAndModify', false);
 
 module.exports = {app, mongoose};

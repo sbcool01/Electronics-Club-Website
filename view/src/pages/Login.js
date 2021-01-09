@@ -56,20 +56,26 @@ function Login(props) {
             };
             await axios.post('/createUser', user)
             .then((response) => {
-                user= {
-                    ...user,
-                    userId: response.data.userId
-                }
-                localStorage.setItem('user', JSON.stringify(user));
-                teamDetails.forEach((teamPage) => {
-                    teamPage.forEach((teamMember) => {
-                        if(user.email === teamMember.email){
-                            localStorage.setItem('isAdmin', true);
-                        }
+                console.log("post login response: ", response);
+                if(!(response.data.error)&&(response.data.userId)){
+                    user= {
+                        ...user,
+                        userId: response.data.userId
+                    }
+                    localStorage.setItem('user', JSON.stringify(user));
+                    teamDetails.forEach((teamPage) => {
+                        teamPage.forEach((teamMember) => {
+                            if(user.email === teamMember.email){
+                                localStorage.setItem('isAdmin', true);
+                            }
+                        })
                     })
-                })
+                    
+                    props.history.push('/user/'+ response.data.userId + '/projects');
+                } else {
+                    props.history.push('/login');
+                }
                 
-                props.history.push('/user/'+ response.data.userId + '/projects');
             })
         }
     }
