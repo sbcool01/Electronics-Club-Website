@@ -58,7 +58,6 @@ function Login(props) {
                     ...user,
                     userId: response.data.userId
                 }
-                console.log("user: ", user);
                 localStorage.setItem('user', JSON.stringify(user));
                 teamDetails.forEach((teamPage) => {
                     teamPage.forEach((teamMember) => {

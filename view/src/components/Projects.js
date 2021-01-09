@@ -27,7 +27,6 @@ function Projects(){
             <Grid container spacing={5} className={classes.main}>
                 {
                     projects? projects.map(project => {
-                        console.log(project);
                         return (
                             <ProjectCard project={project} />
                         )                 

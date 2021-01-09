@@ -50,7 +50,6 @@ function ProjectAppBar(props) {
 
     async function handleLogOut() {
         const response = await microsoftLogOut();
-        console.log("response: ", response);
         if(response.isLogOut){
             localStorage.removeItem('user');
             localStorage.removeItem('isAdmin');
@@ -60,7 +59,6 @@ function ProjectAppBar(props) {
     }
 
     function loadAllActiveProjects() {
-        console.log("loadAllprojects");
         axios.get('http://localhost:4000/getAllActiveProjects')
             .then(response => {  
                 console.log("response: ", response);           
@@ -71,7 +69,6 @@ function ProjectAppBar(props) {
     }
 
     function loadOngoingProjects() {
-        console.log("loadOngoingprojects");
         axios.get('http://localhost:4000/user/'+ user.userId +'/getUserActiveProjects')
         .then(response => { 
             console.log("response: ", response);            
@@ -82,7 +79,6 @@ function ProjectAppBar(props) {
     }
 
     function loadCompletedProjects() {
-        console.log("loadCompletedprojects");
         axios.get('http://localhost:4000/user/'+ user.userId +'/getUserCompletedProjects')
         .then(response => {
             console.log("response: ", response);            

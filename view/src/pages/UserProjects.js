@@ -36,7 +36,6 @@ function UserProjects() {
     }, []);
 
     function handleEdit(project) {
-        console.log("in handle edit project", project);
         setEditProject(project);
         setAddProjectDialog(true);
         setIsNewProject(false);    
@@ -50,7 +49,6 @@ function UserProjects() {
                 <Grid container spacing={5} className={classes.main}>
                     {
                         projects? projects.map(project => {
-                            console.log(project);
                             return (
                                 <ProjectCard project={project} handleEdit={handleEdit} isAllActiveProjects={isAllActiveProjects} />
                             )                 

@@ -11,7 +11,6 @@ async function getUserActiveProjects(request, response) {
         for(let projectId of userActiveProjectIds) {
             await Project.findById(projectId)
             .then((response) => {
-                console.log("response: ", response);
                 userActiveProjects.push(response);
             })
             .catch(error => {
@@ -48,11 +47,10 @@ async function getUserCompletedProjects(request, response) {
 }
 
 async function createUser(request, response) {
-  console.log("body: ", request.body);
   let userId="";
-  await User.findOne({ 'email': request.body.email, 'name': request.body.name}, function (err, user) {
-      if(err){
-          console.log("error: ", error);
+  await User.findOne({ 'email': request.body.email, 'name': request.body.name}, function (error, user) {
+      if(error){
+          console.log(error);
       }
       if(user===null){
           const newUser=new User({
@@ -61,12 +59,11 @@ async function createUser(request, response) {
             'completedProjects': [],
             'ongoingProjects': []
           });
-          newUser.save((err, user) => {
-            if(err){
-              return err;
+          newUser.save((error, user) => {
+            if(error){
+              return error;
             } else {
               userId=user._id.toString();
-              console.log("Added User to Database successfully");
             }
           })
       }
@@ -78,13 +75,14 @@ async function createUser(request, response) {
 }
 
 function joinProject(request, response) {
-    console.log("request body: ", request.body);
     let projectId = request.params.projectId;
     Project.findById(projectId)
     .then(async (project) => {
         let newMember = request.body.user;
-        await User.findOneAndUpdate({email: newMember}, { $addToSet: { ongoingProjects: projectId } }, null, function(err, response){
-            console.log("updated User: ", response);
+        await User.findOneAndUpdate({email: newMember}, { $addToSet: { ongoingProjects: projectId } }, null, function(error, response){
+            if(error){
+                console.log(error);
+            }
         });
         project['teamMembersWithEmail'].push(newMember);
         project.save((error) => {
@@ -95,13 +93,14 @@ function joinProject(request, response) {
 }
 
 function leaveProject(request, response) {
-    console.log("request body: ", request.body);
     let projectId = request.params.projectId;
     Project.findById(projectId)
     .then(async (project) => {
         let memberToBeRemoved = request.body.user;
-        await User.findOneAndUpdate({email: memberToBeRemoved}, { $pull: { ongoingProjects: projectId } }, null, function(err, response){
-            console.log("updated User: ", response);
+        await User.findOneAndUpdate({email: memberToBeRemoved}, { $pull: { ongoingProjects: projectId } }, null, function(error, response){
+            if(error){
+                console.log(error);
+            }
         });
         for(let i in project.mentors) {
             if(project.mentors[i] === memberToBeRemoved){

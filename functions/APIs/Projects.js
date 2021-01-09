@@ -15,11 +15,9 @@ function getAllActiveProjects(request, response){
 };
 
 async function addNewProject(request, response){
-    console.log("body: ", request.body);
     let projectId="";
     const newProject=new Project(request.body);
     const mentors=request.body.mentors;
-    console.log("mentors: ", mentors);
     await newProject.save(async (err, project) => {
         if(err){
           return err;
@@ -27,17 +25,20 @@ async function addNewProject(request, response){
           projectId = project._id.toString();
           for(let mentor of mentors){
               if(request.body.status==='Active'){
-                  await User.findOneAndUpdate({email: mentor}, { $addToSet: { ongoingProjects: projectId } }, null, function(err, response){
-                    console.log("updated User: ", response);
+                  await User.findOneAndUpdate({email: mentor}, { $addToSet: { ongoingProjects: projectId } }, null, function(error, response){
+                    if(error){
+                        console.log(error);
+                    }
                   });
               }
               if(request.body.status==='Completed'){
-                await User.findOneAndUpdate({email: mentor}, { $addToSet: { completedProjects: projectId } }, null, function(err, response){
-                  console.log("updated User: ", response);
+                await User.findOneAndUpdate({email: mentor}, { $addToSet: { completedProjects: projectId } }, null, function(error, response){
+                    if(error){
+                        console.log(error);
+                    }
                 });
               }
           }
-          console.log("Added to Database successfully");
         }
     });
     
@@ -45,7 +46,6 @@ async function addNewProject(request, response){
 }
 
 function deleteProject(request, response) {
-    console.log("in delete Project");
     let projectId = request.params.projectId;
     Project.findById(projectId)
     .then(async (project) => {
@@ -53,13 +53,17 @@ function deleteProject(request, response) {
         let members = [...project.teamMembersWithEmail, ...project.mentors];
         for(let member of members) {
             if(status==='Active'){
-                await User.findOneAndUpdate({email: member}, { $pull: { ongoingProjects: projectId } }, null, function(err, response){
-                    console.log("updated User: ", response);
+                await User.findOneAndUpdate({email: member}, { $pull: { ongoingProjects: projectId } }, null, function(error, response){
+                    if(error){
+                        console.log(error);
+                    }
                 });
             }
             if(status==='Completed'){
-              await User.findOneAndUpdate({email: member}, { $pull: { completedProjects: projectId } }, null, function(err, response){
-                console.log("updated User: ", response);
+              await User.findOneAndUpdate({email: member}, { $pull: { completedProjects: projectId } }, null, function(error, response){
+                    if(error){
+                        console.log(error);
+                    }
               });
             }
         }
@@ -73,7 +77,6 @@ function deleteProject(request, response) {
 }
 
 async function editProject(request, response){
-    console.log("body: ", request.body);
     let projectId = request.params.projectId;
     await Project.findById(projectId)
     .then(async(project) => {
@@ -85,8 +88,6 @@ async function editProject(request, response){
                 await User.findOneAndUpdate({email: member}, {$pull: {ongoingProjects: projectId}, $addToSet: {completedProjects: projectId}}, null, (error, response) => {
                     if(error) {
                         console.log(error);
-                    }else {
-                        console.log(response);
                     }
                 })
             }
@@ -115,16 +116,12 @@ async function editProject(request, response){
                 await User.findOneAndUpdate({email: member}, {$addToset: {ongoingProjects: projectId}}, null, (error, response) => {
                     if(error) {
                         console.log(error);
-                    }else {
-                        console.log(response);
                     }
                 });
             } else {
                 await User.findOneAndUpdate({email: member}, {$addToset: {completedProjects: projectId}}, null, (error, response) => {
                     if(error) {
                         console.log(error);
-                    }else {
-                        console.log(response);
                     }
                 });
             }   
@@ -135,16 +132,12 @@ async function editProject(request, response){
                 await User.findOneAndUpdate({email: member}, {$pull: {ongoingProjects: projectId}}, null, (error, response) => {
                     if(error) {
                         console.log(error);
-                    }else {
-                        console.log(response);
                     }
                 })
             } else {
                 await User.findOneAndUpdate({email: member}, {$pull: {completedProjects: projectId}}, null, (error, response) => {
                     if(error) {
                         console.log(error);
-                    }else {
-                        console.log(response);
                     }
                 })
             }   
