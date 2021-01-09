@@ -59,7 +59,7 @@ function ProjectAppBar(props) {
     }
 
     function loadAllActiveProjects() {
-        axios.get('http://localhost:4000/getAllActiveProjects')
+        axios.get('/getAllActiveProjects')
             .then(response => {  
                 console.log("response: ", response);           
                 props.setProjects(response.data.projects);
@@ -69,7 +69,7 @@ function ProjectAppBar(props) {
     }
 
     function loadOngoingProjects() {
-        axios.get('http://localhost:4000/user/'+ user.userId +'/getUserActiveProjects')
+        axios.get('/user/'+ user.userId +'/getUserActiveProjects')
         .then(response => { 
             console.log("response: ", response);            
             props.setProjects(response.data.projects);
@@ -79,7 +79,7 @@ function ProjectAppBar(props) {
     }
 
     function loadCompletedProjects() {
-        axios.get('http://localhost:4000/user/'+ user.userId +'/getUserCompletedProjects')
+        axios.get('/user/'+ user.userId +'/getUserCompletedProjects')
         .then(response => {
             console.log("response: ", response);            
             props.setProjects(response.data.projects);

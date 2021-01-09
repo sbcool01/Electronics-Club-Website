@@ -15,7 +15,7 @@ function Projects(){
     let [projects, setProjects] = useState([]);
     
     useEffect(() => {
-        axios.get('http://localhost:4000/getAllCompletedProjects')
+        axios.get('/getAllCompletedProjects')
         .then(response => {
             setProjects(response.data.projects);
         })

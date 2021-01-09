@@ -6,7 +6,7 @@ function ConfirmationDialog(props) {
 
     function handleDeleteProject() {
         console.log("inHandleDeleteProject");
-        axios.delete('http://localhost:4000/deleteProject/' + props.project._id.toString())
+        axios.delete('/deleteProject/' + props.project._id.toString())
         .then(response => {
             console.log("Deleted Project Succesfully");
             props.setOpenDeleteDialog(false);

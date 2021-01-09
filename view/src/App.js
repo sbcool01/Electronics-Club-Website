@@ -11,6 +11,15 @@ import ProjectsPage from "./pages/ProjectsPage";
 import Login from "./pages/Login";
 import UserProjects from "./pages/UserProjects";
 import ShareNewIdea from "./pages/ShareNewIdea";
+import axios from "axios";
+
+var api_url="";
+
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+	axios.defaults.baseURL = 'http://localhost:4000';
+} else {
+	api_url = ""	
+}
 
 function App() {
     return (

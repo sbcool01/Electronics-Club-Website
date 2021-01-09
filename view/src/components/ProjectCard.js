@@ -82,7 +82,7 @@ function Projects(props){
 
     function handleJoinProject() {
         const currentUserEmail = JSON.parse(localStorage.getItem('user')).email;
-        axios.post('http://localhost:4000/editProject/' + props.project._id.toString() + '/joinProject', {user: currentUserEmail})
+        axios.post('/editProject/' + props.project._id.toString() + '/joinProject', {user: currentUserEmail})
         .then((response) => {
             console.log("response: ", response);
             window.location.reload();
@@ -94,7 +94,7 @@ function Projects(props){
 
     function handleLeaveProject() {
         const currentUserEmail = JSON.parse(localStorage.getItem('user')).email;
-        axios.post('http://localhost:4000/editProject/' + props.project._id.toString() + '/leaveProject', {user: currentUserEmail})
+        axios.post('/editProject/' + props.project._id.toString() + '/leaveProject', {user: currentUserEmail})
         .then((response) => {
             console.log("response: ", response);
             window.location.reload();          

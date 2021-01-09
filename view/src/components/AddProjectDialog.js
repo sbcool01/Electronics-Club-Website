@@ -134,14 +134,14 @@ function AddProjectDialog(props) {
 
     function handleSubmit() {
         if((props.project)&&(props.project._id)){
-            axios.post('http://localhost:4000/editProject/' + props.project._id.toString(), project)
+            axios.post('/editProject/' + props.project._id.toString(), project)
             .then((response) => {
                 console.log("response: ", response);
             });
             handleClose();
             window.location.reload();
         } else {
-            axios.post('http://localhost:4000/addNewProject', project)
+            axios.post('/addNewProject', project)
             .then((response) => {
                 console.log("response: ", response);
             });

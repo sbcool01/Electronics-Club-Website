@@ -71,7 +71,7 @@ function ContactForm (props) {
     }
     
     function sendContactUsData() {
-        axios.post('http://localhost:4000/sendDataToEmail/', formData)
+        axios.post('/sendDataToEmail/', formData)
         .then((response)=> {
             console.log(response);
             window.location.reload();

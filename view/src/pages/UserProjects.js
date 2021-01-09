@@ -28,7 +28,7 @@ function UserProjects() {
     let [isAllActiveProjects, setIsAllActiveProjects] = useState(true);
 
     useEffect(() => {
-        axios.get('http://localhost:4000/getAllActiveProjects')
+        axios.get('/getAllActiveProjects')
             .then(response => {            
                 setProjects(response.data.projects);
                 setStatus("All Active Club Projects");

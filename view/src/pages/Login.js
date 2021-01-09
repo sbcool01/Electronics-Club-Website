@@ -54,7 +54,7 @@ function Login(props) {
                 email : response.result.user.email,
                 name : response.result.user.displayName
             };
-            await axios.post('http://localhost:4000/createUser', user)
+            await axios.post('/createUser', user)
             .then((response) => {
                 user= {
                     ...user,
