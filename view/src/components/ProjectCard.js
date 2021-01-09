@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Typography, Button, Accordion, AccordionDetails, AccordionSummary, Chip, Card, CardHeader, CardMedia, CardContent, Hidden, IconButton} from "@material-ui/core";
+import { Grid, Typography, Button, Accordion, AccordionDetails, AccordionSummary, Chip, Card, CardHeader, CardMedia, CardContent, Hidden, IconButton, Avatar} from "@material-ui/core";
 import ConfirmationDialog from '../components/ConfirmationDialog';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import EditIcon from '@material-ui/icons/Edit';
@@ -8,6 +8,10 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({   
+    avatar: {
+		height: 'inherit',
+		width: '100%',
+	},
     alignLeft: {
         display: 'flex',
         alignItems: 'flex-start',
@@ -119,11 +123,12 @@ function Projects(props){
                     subheader={props.project.domain}
                 />
                 <Hidden xsDown>
-                    <CardMedia
+                    {/* <CardMedia
                         className={classes.media}
                         image= {props.project.url}
                         title="Project pic"
-                    />
+                    /> */}
+                    <Avatar variant="square" className={classes.avatar} src={props.project.url} />
                 </Hidden>
                 <CardContent>
                     <Typography style={{marginBottom: '10px'}} className={classes.desc}>

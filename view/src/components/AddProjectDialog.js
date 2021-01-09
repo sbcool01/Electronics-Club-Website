@@ -189,14 +189,14 @@ function AddProjectDialog(props) {
                                 <ChipInput fullWidth variant="outlined" name="mentors" label="Add Mentors By Email"  value={project.mentors} onAdd={(chip) => handleAddChip("mentors", chip)} onDelete={(chip, index) => handleDeleteChip("mentors", chip, index)} />
                             </Grid>
                             <Grid item xs={12} style={{padding: '10px'}}>
-                                <ChipInput fullWidth variant="outlined" name="teamMembersWithEmail" label="Add Team Members By Email"  value={project.teamMembersWithEmail} onAdd={(chip) => handleAddChip("teamMembersWithEmail", chip)} onDelete={(chip, index) => handleDeleteChip("teamMembers", chip, index)} />
+                                <ChipInput fullWidth variant="outlined" name="teamMembersWithEmail" label="Add Team Members By Email"  value={project.teamMembersWithEmail} onAdd={(chip) => handleAddChip("teamMembersWithEmail", chip)} onDelete={(chip, index) => handleDeleteChip("teamMembersWithEmail", chip, index)} />
                             </Grid>
                             <Grid item xs={12} style={{padding: '10px'}}>
-                                <ChipInput fullWidth variant="outlined" name="teamMembersWithName" label="Add Team Members By Name" value={project.teamMembersWithName} onAdd={(chip) => handleAddChip("teamMembersWithName", chip)} onDelete={(chip, index) => handleDeleteChip("otherTeamMembers", chip, index)}/>
+                                <ChipInput fullWidth variant="outlined" name="teamMembersWithName" label="Add Team Members By Name" value={project.teamMembersWithName} onAdd={(chip) => handleAddChip("teamMembersWithName", chip)} onDelete={(chip, index) => handleDeleteChip("teamMembersWithName", chip, index)}/>
                             </Grid>
                             <Grid item xs={12} style={{padding: '10px'}}>
                                 <center>
-                                <input required type="file" onChange={handleFile} ref={inputFile}/>
+                                <input required type="file" onChange={handleFile} accept="image/*" ref={inputFile}/>
                                 <Button onClick={removeFile}>Remove File</Button>
                                 <Button disabled={!file} onClick={handleUpload}>Upload</Button>
                                 </center>
